@@ -29,8 +29,12 @@ function startTimer(duration, display) {
 //-- No direct access
 //defined('_JEXEC') || die('=;)');
 
-$cuentaNombre = $cuenta->getUsuario();
-$creds = $cuenta->getCreditos();
+require("./model/app.php");
+
+$user = new user("User1", 10);
+
+$cuentaNombre = $user->getName();
+$creds = $user->getCreditos();
 
 print '<style>';
 include("comercio.css");
