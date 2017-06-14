@@ -13,11 +13,11 @@ class User
 
     public function getName()
     {
-        return $name;
+        return $this->name;
     }
 
     public function getCreditos()
     {
-        return $creditos;
+        return $this->creditos;
     }
 }

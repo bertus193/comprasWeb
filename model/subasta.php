@@ -11,45 +11,56 @@ class Subasta
     private $fechaInicio;
     private $fechaFin;
 
+    public function __construct($id, $personaje, $creditos, $precioTipo, $precio, $fechaInicio, $fechaFin)
+    {
+        $this->setId($id);
+        $this->setPersonaje($personaje);
+        $this->setCreditos($creditos);
+        $this->setPrecioTipo($precioTipo);
+        $this->setPrecio($precio);
+        $this->setFechaInicio($fechaInicio);
+        $this->setFechaFin($fechaFin);
+    }
+
     public function getId()
     {
-        return $id;
+        return $this->id;
     }
 
     public function getPersonaje()
     {
-        return $personaje;
+        return $this->personaje;
     }
 
     public function getCreditos()
     {
-        return $creditos;
+        return $this->creditos;
     }
 
     public function getPrecioTipo()
     {
-        return $precioTipo;
+        return $this->precioTipo;
     }
 
     public function getPrecio()
     {
-        return $precio;
+        return $this->precio;
     }
 
     public function getFechaInicio()
     {
-        return $fechaInicio;
+        return $this->fechaInicio;
     }
 
     public function getFechaFin()
     {
-        return $fechaFin;
+        return $this->fechaFin;
     }
 
 
     public function setId($id)
     {
-        return $id;
+        $this->id = $id;
     }
 
     public function setPersonaje($personaje)

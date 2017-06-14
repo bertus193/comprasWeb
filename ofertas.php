@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set("Europe/Madrid");
+
  //-- No direct access
 //defined('_JEXEC') || die('=;)');
 require_once("./model/app.php");
@@ -19,15 +22,14 @@ if ($_POST['page']) {
     $subastas = $app->getSubastas($start, $per_page);
 
     foreach ($subastas as $oferta) {
-        $id = $oferta['id'];
-        $pj = $oferta['personaje'];
-        $creditos = $oferta['creditos'];
-        if ($oferta['precioTipo'] == 49426) {
+        $pj = $oferta->getPersonaje();
+        $creditos = $oferta->getCreditos();
+        if ($oferta->getPrecioTipo() == 49426) {
             $ofertaTipo = "emblemas de escarcha";
         }
-        $precio = $oferta['precio'].' '.$ofertaTipo;
-        $fechaFin = strtotime($oferta['fechaFin']);
-        $now = strtotime($oferta['now']);
+        $precio = $oferta->getPrecio().' '.$ofertaTipo;
+        $fechaFin = strtotime($oferta->getFechaFin());
+        $now = strtotime($oferta->getFechaInicio());
         $finOferta = $fechaFin - $now;
 
         print '<a href="comercio?vista=comprar&accion='.$id.'"><div class="caja">
@@ -43,8 +45,7 @@ if ($_POST['page']) {
         print '</div></div></a>';
     }
 
-    $query_pag_num = mysql_query("SELECT * FROM don_comercio WHERE fechaFin > now() AND finalizada = 0"); // Total records
-    $count = mysql_num_rows($query_pag_num);
+    $count = $app->getRowsSUbastas();
     $no_of_paginations = ceil($count / $per_page);
 
     if ($cur_page >= 7) {

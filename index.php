@@ -32,21 +32,20 @@ function startTimer(duration, display) {
 </head>	
 <body>
 <?php
-
 //-- No direct access
 //defined('_JEXEC') || die('=;)');
 
 require_once("./model/app.php");
+
+print '<style>';
+include("comercio.css");
+print '</style>';
 
 $app = new App();
 $user = new User("User1", 10);
 
 $cuentaNombre = $user->getName();
 $creds = $user->getCreditos();
-
-print '<style>';
-include("comercio.css");
-print '</style>';
 
 print '<div align="center"><img src="https://www.uppic.es/images/2016/03/03/MercadoNegro.png"><br><br>';
 
