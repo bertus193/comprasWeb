@@ -31,94 +31,82 @@ defined('_JEXEC') || die('=;)');
 
 $ventaSession = $session->get('ventaSession');
 
-if($ventaSession == 1 && isset($_GET['jugador']) && isset($_GET['creditos']) && isset($_GET['totalAPedir']) && isset($_GET['tipo']) && isset($_GET['tiempo'])){
-    
+if ($ventaSession == 1 && isset($_GET['jugador']) && isset($_GET['creditos']) && isset($_GET['totalAPedir']) && isset($_GET['tipo']) && isset($_GET['tiempo'])) {
     $jugador     = $app->limpiarString($_GET['jugador']);
     $creditos    = $app->limpiarString($_GET['creditos']);
     $totalAPedir = $app->limpiarString($_GET['totalAPedir']);
     $tipo        = $app->limpiarString($_GET['tipo']);
     $tiempo      = $app->limpiarString($_GET['tiempo']);
 
-    if(is_numeric($creditos) && is_numeric($totalAPedir) && ctype_digit($creditos) && ctype_digit($totalAPedir)){
-        if($totalAPedir > 0 && $creditos > 0 && $totalAPedir <= 900){
-        
+    if (is_numeric($creditos) && is_numeric($totalAPedir) && ctype_digit($creditos) && ctype_digit($totalAPedir)) {
+        if ($totalAPedir > 0 && $creditos > 0 && $totalAPedir <= 900) {
             $totalPjsH = array();
             $totalPjsM = array();
     
             $reino = substr($jugador, 0, 3);
     
-            if($reino == "Hul" || $reino == "Mid"){
+            if ($reino == "Hul" || $reino == "Mid") {
                 $nombrePj = substr($jugador, 6);
     
-                if($reino == "Hul"){
+                if ($reino == "Hul") {
                     $ObjPersonajes = cuenta::getPjsArray($app, $cuenta, 1);
+                } elseif ($reino == "Mid") {
+                    $ObjPersonajes = cuenta::getPjsArray($app, $cuenta, 2);
                 }
-                else if($reino == "Mid"){
-                    $ObjPersonajes = cuenta::getPjsArray($app, $cuenta, 2); 
-                }    
                 
                 $totalPjs = array();
-                foreach($ObjPersonajes as $pj){
+                foreach ($ObjPersonajes as $pj) {
                     array_push($totalPjs, $pj->getNombre());
                 }
         
-                if(in_array($nombrePj, $totalPjs)){
-                    if($tipo == "49426"){
-                        if($tiempo == 1 OR $tiempo == 2){
+                if (in_array($nombrePj, $totalPjs)) {
+                    if ($tipo == "49426") {
+                        if ($tiempo == 1 or $tiempo == 2) {
                             $creditosAcc = $cuenta->getCreditos();
-                            if($creditos >= 1){
-                                if($creditosAcc >= $creditos){
-                                $creditosDespues = $creditosAcc - $creditos;
+                            if ($creditos >= 1) {
+                                if ($creditosAcc >= $creditos) {
+                                    $creditosDespues = $creditosAcc - $creditos;
     
-                                $app->getSqlLogon();
+                                    $app->getSqlLogon();
     
-                                $query = 'INSERT INTO `don_comercio` (`personaje`, `vendedorCuenta`, `creditos`, `precio`, `precioTipo`,`fechaFin`) VALUES
+                                    $query = 'INSERT INTO `don_comercio` (`personaje`, `vendedorCuenta`, `creditos`, `precio`, `precioTipo`,`fechaFin`) VALUES
                                                             ("'.$jugador.'", "'.$cuentaNombre.'", '.$creditos.', '.$totalAPedir.', 
                                                         "'.$tipo.'", NOW() + INTERVAL '.$tiempo.' DAY);';
     
-                                mysql_query($query) or die(mysql_error());
+                                    mysql_query($query) or die(mysql_error());
     
-                                print '<font style="color:green">Oferta añadida correctamente.</font>';
+                                    print '<font style="color:green">Oferta añadida correctamente.</font>';
     
-                                if($query){
-                                    $cuenta->setCreditos($creditosDespues, true);
-                                }
-    
-                                }  
-                                else{
+                                    if ($query) {
+                                        $cuenta->setCreditos($creditosDespues, true);
+                                    }
+                                } else {
                                     $error = "No tienes suficientes créditos.";
                                 }
-                            }
-                            else{
+                            } else {
                                 $error = "Mínimo, 1 créditos";
                             }
-                        }
-                        else{
+                        } else {
                             $error = "Nope";
                         }
-                    }
-                    else{
+                    } else {
                         $error = "Podria ser pero no, utiliza escarchas...";
                     }
+                } else {
+                    $error = "Dicho personaje no es tuyo.";
                 }
-                else{
-                  $error = "Dicho personaje no es tuyo.";
-                }
-            }
-            else{
+            } else {
                 $error = "Dicho Reino no existe.";
             }
-        }
-        else{
+        } else {
             $error = "Los créditos o item a pedir debe ser mayor que 0 e inferior o igual a 900.";
         }
-    }
-    else{
-      $error = "El total de créditos y/o el total a pedir deben ser números enteros.";
+    } else {
+        $error = "El total de créditos y/o el total a pedir deben ser números enteros.";
     }
 }
-if($error){
-      print '<font style="color:red">'.$error.'</font>';
+if ($error) {
+    print '<font style="color:red">'.$error.'</font>';
 }
 
 print '<form onSubmit="return my_confirm()">';
@@ -139,21 +127,20 @@ $PjsH = cuenta::getPjsArray($app, $cuenta, 1);
 $PjsM = cuenta::getPjsArray($app, $cuenta, 2);
 
 print '<select name="jugador">';
-foreach($PjsH as $pj){
+foreach ($PjsH as $pj) {
     $nombre = "Hul - ".$pj->getNombre();
     print '<option value="'.$nombre.'">'.$nombre.'</option>';
 }
-foreach($PjsM as $pj){
+foreach ($PjsM as $pj) {
     $nombre = "Mid - ".$pj->getNombre();
     print '<option value="'.$nombre.'">'.$nombre.'</option>';
 }
 
 print '</select> ';
 
-if($ventaSession == 1){
+if ($ventaSession == 1) {
     $session->clear('ventaSession');
-}
-else{
+} else {
     $session->set('ventaSession', 1);
 }
 

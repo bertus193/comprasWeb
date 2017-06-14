@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<html>
+<head>
+  <title>Comercio de créditos</title>
+  <meta charset="UTF-8">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 function startTimer(duration, display) {
@@ -24,14 +29,17 @@ function startTimer(duration, display) {
     }, 1000);
 }
 </script>
+</head>	
+<body>
 <?php
 
 //-- No direct access
 //defined('_JEXEC') || die('=;)');
 
-require("./model/app.php");
+require_once("./model/app.php");
 
-$user = new user("User1", 10);
+$app = new App();
+$user = new User("User1", 10);
 
 $cuentaNombre = $user->getName();
 $creds = $user->getCreditos();
@@ -46,21 +54,21 @@ $vista = $_GET['vista'];
 $accion = $_GET['accion'];
 
 switch ($vista) {
-	case 'nuevaOferta':
-		include('nuevaOferta.php');
-		break;
-	case 'historial':
-		include('historial.php');
-		break;
-	case 'comprar':
-		include('comprar.php');
-		break;
-	case 'nuevaOferta':
-		include('nuevaOferta.php');
-		break;	
-	default:
-		include('principal.php');
-		break;
+    case 'nuevaOferta':
+        include('nuevaOferta.php');
+        break;
+    case 'historial':
+        include('historial.php');
+        break;
+    case 'comprar':
+        include('comprar.php');
+        break;
+    case 'nuevaOferta':
+        include('nuevaOferta.php');
+        break;
+    default:
+        include('principal.php');
+        break;
 }
 
 print '<div align="center">';
@@ -76,3 +84,5 @@ print '</div><br><br>';
 print '</div>';
 
 ?>
+</body>
+</html>
