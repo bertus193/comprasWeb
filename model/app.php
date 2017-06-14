@@ -2,6 +2,7 @@
 
 require_once("config.php");
 require_once("user.php");
+require_once("subasta.php");
 
 class App
 {
@@ -15,9 +16,21 @@ class App
 
     public function getSql()
     {
-        $sql = mysql_connect($this->config->getHost() . ':' . $this->config->dbport, $this->config->dbuser, $this->config->dbpass);
-        mysql_select_db($config->database);
+        $sql = mysql_connect($this->config->getHost() . ':' . $this->config->getDBPort(), $this->config->getDBUser(), $this->config->getDBPass());
+        mysql_select_db($this->config->getDB());
         mysql_query("SET NAMES 'utf8'", $sql);
         return $sql;
+    }
+
+    public function getSubastas($start, $per_page)
+    {
+        $subastas = array();
+        $query = mysql_query("SELECT id, personaje, creditos, precioTipo, precio, fechaFin, now() as now FROM comercio WHERE fechaFin > now() AND finalizada = 0 ORDER BY (precio/creditos),id ASC LIMIT $start, $per_page");
+
+        while ($oferta = mysql_fetch_array($query)) {
+            $subastas.push(new Subasta());
+        }
+
+        return $subastas;
     }
 }

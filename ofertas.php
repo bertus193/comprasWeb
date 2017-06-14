@@ -1,14 +1,8 @@
-
- <?php
+<?php
  //-- No direct access
 //defined('_JEXEC') || die('=;)');
-
-
-include_once("/var/www/vhosts/terra-golfa.com/framework/TG.php");
-
+require_once("./model/app.php");
 $app = new app();
-
-
 
 if ($_POST['page']) {
     $page = $_POST['page'];
@@ -17,12 +11,14 @@ if ($_POST['page']) {
     $per_page = 6; // Per page records
 
     $start = $page * $per_page;
-    $app->getSqlLogon();
-    $query = mysql_query("SELECT id, personaje, creditos, precioTipo, precio, fechaFin, now() as now FROM don_comercio WHERE fechaFin > now() AND finalizada = 0 ORDER BY (precio/creditos),id ASC LIMIT $start, $per_page");
+    $app->getSql();
+    
     //print $start." ".$per_page;
     print '<div style="display: table; text-align: center;">';
 
-    while ($oferta = mysql_fetch_array($query)) {
+    $subastas = $app->getSubastas($start, $per_page);
+
+    foreach ($subastas as $oferta) {
         $id = $oferta['id'];
         $pj = $oferta['personaje'];
         $creditos = $oferta['creditos'];
@@ -113,4 +109,3 @@ if ($cur_page < $no_of_paginations) {
 
     print '</div>';
 }
-?>

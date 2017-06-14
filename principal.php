@@ -12,7 +12,7 @@ jQuery(function ($) {
                     $.ajax
                     ({
                         type: "POST",
-                        url: "/extras/comercio/ofertas.php",
+                        url: window.location.href + "/ofertas.php",
                         data: "page="+page,
                         success: function(msg)
                         {

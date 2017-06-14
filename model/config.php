@@ -13,4 +13,24 @@ class Config
     {
         return $this->host;
     }
+
+    public function getDBPort()
+    {
+        return $this->dbport;
+    }
+
+    public function getDBUser()
+    {
+        return $this->dbuser;
+    }
+
+    public function getDBPass()
+    {
+        return $this->dbpass;
+    }
+
+    public function getDB()
+    {
+        return $this->database;
+    }
 }
