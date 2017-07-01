@@ -37,12 +37,13 @@ switch ($vista) {
         break;
 }
 
+
+
 print '<div align="center">';
 print '<div class="creditos">Tienes '.$creds.' créditos</div>';
-print '<form action="" style="float: left;"><input name="vista" value="nuevaOferta" type="hidden"><input class="boton" value="Nueva Oferta" type="submit"></form>';
-print '<form action="" style="float: right;"><input name="vista" value="historial" type="hidden"><input class="boton" value="Mis Ofertas y Compras" type="submit"></form>';
-print '<form action="" style="float: right; margin-right: 10px;"><input name="vista" value="inicio" type="hidden"><input class="boton" value="Inicio" type="submit"></form>';
-
+print '<a style="text-decoration: none; float: left;" class="boton" href="'.$currentUrl.'nuevaOferta">Nueva Oferta</a>';
+print '<a style="text-decoration: none; float: right;" class="boton" href="'.$currentUrl.'nuevaOferta">Mis Ofertas y Compras</a>';
+print '<a style="text-decoration: none; float: right; margin-right: 10px;" class="boton" href="'.$currentUrl.'">Inicio</a>';
 
 print '</div><br><br>';
 
