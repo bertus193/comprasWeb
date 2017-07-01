@@ -1,3 +1,8 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+date_default_timezone_set('Europe/Madrid');
+?>
+
 <script type="text/javascript">
 jQuery(function ($) {
 	            $(document).ready(function(){
@@ -12,7 +17,7 @@ jQuery(function ($) {
                     $.ajax
                     ({
                         type: "POST",
-                        url: window.location.href + "/ofertas.php",
+                        url: window.location.href + "ofertas",
                         data: "page="+page,
                         success: function(msg)
                         {
@@ -51,18 +56,17 @@ jQuery(function ($) {
 
 </script>
 
-<?php
-date_default_timezone_set('Europe/Madrid');
 
-print '<div id="container"style="min-height: 448px;">
+<div id="container"style="min-height: 448px;">
             <div class="data"></div>
             <div class="pagination"></div>
-        </div>';
+        </div>
 
-print '<h2>Últimas 6 ventas realizadas</h2>';
+<h2>Últimas 6 ventas realizadas</h2>
 
-print '<div style="display: table; text-align: center;">';
-
+<div style="display: table; text-align: center;">
+    
+<?php
 //Finalizadas
 $subastas = $app->getSubastasFinalizadas(6);
 
@@ -96,7 +100,7 @@ if ($subastas && count($subastas) >= 1) {
             $trTipo = 0;
         }*/
 
-        print '<a href="comercio?vista=comprar&accion='.$id.'"><div class="caja">
+        print '<a href="'.uri_string().$id.'"><div class="caja">
 				<div class="cajaImagen">
 					<img src="https://static.terra-golfa.com/img/icons/coin-icon.png">';
         print '<span style="position: absolute; margin: 45px 0px 0px -16px; background-color: rgb(59, 58, 125); min-width: 24px; border-radius: 15px; height: 23px;">'.$creditos.'</span>';

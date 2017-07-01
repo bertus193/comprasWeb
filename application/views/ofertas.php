@@ -1,24 +1,20 @@
 <?php
-
+defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Europe/Madrid");
 
- //-- No direct access
-//defined('_JEXEC') || die('=;)');
-require_once("./model/app.php");
-$app = new app();
-
-if ($_POST['page']) {
-    $page = $_POST['page'];
+$data = $this->input->post();
+if ($data['page'] > 0) {
+    $app = new App();
+    
+    $page = $data['page'];
     $cur_page = $page;
     $page -= 1;
     $per_page = 6; // Per page records
 
     $start = $page * $per_page;
-    $app->getSql();
     
     //print $start." ".$per_page;
     print '<div style="display: table; text-align: center;">';
-
     $subastas = $app->getSubastas($start, $per_page);
 
     foreach ($subastas as $oferta) {
@@ -32,15 +28,15 @@ if ($_POST['page']) {
         $now = strtotime($oferta->getFechaInicio());
         $finOferta = $fechaFin - $now;
 
-        print '<a href="comercio?vista=comprar&accion='.$id.'"><div class="caja">
-				<div class="cajaImagen">
-					<img src="https://static.terra-golfa.com/img/icons/coin-icon.png">';
+        print '<a href="comercio?vista=comprar&accion='.$oferta->getId().'"><div class="caja">
+                <div class="cajaImagen">
+                    <img src="https://static.terra-golfa.com/img/icons/coin-icon.png">';
         print '<span style="position: absolute; margin: 45px 0px 0px -16px; background-color: rgb(59, 58, 125); min-width: 24px; border-radius: 15px; height: 23px;">'.$creditos.'</span>';
-                    
+
         print '</div>
-				<div class="cajaBody">';
+                <div class="cajaBody">';
         print '<p><font class=descripcion>Vendedor: </font>'.$pj.'</p>';
-        print '<p><font class=descripcion>Finaliza en: </font><span id="time'.$id.'">Cargando...<script>startTimer('.$finOferta.',document.querySelector("#time'.$id.'"))</script></span></p>';
+        print '<p><font class=descripcion>Finaliza en: </font><span id="time'.$oferta->getId().'">Cargando...<script>startTimer('.$finOferta.',document.querySelector("#time'.$oferta->getId().'"))</script></span></p>';
         print '<p><font class=descripcion>Precio: </font>'.$precio.'</p>';
         print '</div></div></a>';
     }
@@ -69,20 +65,20 @@ if ($_POST['page']) {
 
     print "<div class='pagination'><ul class='paginate'>";
 
-// FOR ENABLING THE Primero BUTTON
-if ($cur_page > 1) {
-    print "<li p='1' class='active paginateLi'>Primero</li>";
-} else {
-    print '<li style="float: left; width: 62.11px; padding: 0px 6px 1px;"></li>';
-}
+    // FOR ENABLING THE Primero BUTTON
+    if ($cur_page > 1) {
+        print "<li p='1' class='active paginateLi'>Primero</li>";
+    } else {
+        print '<li style="float: left; width: 62.11px; padding: 0px 6px 1px;"></li>';
+    }
 
-// FOR ENABLING THE Anterior BUTTON
-if ($cur_page > 1) {
-    $pre = $cur_page - 1;
-    print "<li p='$pre' class='active paginateLi'>Anterior</li>";
-} else {
-    print '<li style="float: left; width: 63.5px; padding: 0px 6px 1px;"></li>';
-}
+    // FOR ENABLING THE Anterior BUTTON
+    if ($cur_page > 1) {
+        $pre = $cur_page - 1;
+        print "<li p='$pre' class='active paginateLi'>Anterior</li>";
+    } else {
+        print '<li style="float: left; width: 63.5px; padding: 0px 6px 1px;"></li>';
+    }
 
     for ($i = $start_loop; $i <= $end_loop; $i++) {
         if ($cur_page == $i) {
@@ -92,21 +88,21 @@ if ($cur_page > 1) {
         }
     }
 
-// TO ENABLE THE Siguiente BUTTON
+    // TO ENABLE THE Siguiente BUTTON
 
-if ($cur_page < $no_of_paginations) {
-    $nex = $cur_page + 1;
-    print "<li p='$nex' class='active paginateLi'>Siguiente</li>";
-} else {
-    print '<li style="float: left; width: 71.14px; padding: 0px 6px 1px;"></li>';
-}
+    if ($cur_page < $no_of_paginations) {
+        $nex = $cur_page + 1;
+        print "<li p='$nex' class='active paginateLi'>Siguiente</li>";
+    } else {
+        print '<li style="float: left; width: 71.14px; padding: 0px 6px 1px;"></li>';
+    }
 
-// TO ENABLE THE END BUTTON
-if ($cur_page < $no_of_paginations) {
-    print "<li p='$no_of_paginations' class='active paginateLi'>Último</li>";
-} else {
-    print '<li style="float: left; width: 53.74px; padding: 0px 6px 1px;"></li>';
-}
+    // TO ENABLE THE END BUTTON
+    if ($cur_page < $no_of_paginations) {
+        print "<li p='$no_of_paginations' class='active paginateLi'>Último</li>";
+    } else {
+        print '<li style="float: left; width: 53.74px; padding: 0px 6px 1px;"></li>';
+    }
 
     print '</div>';
 }

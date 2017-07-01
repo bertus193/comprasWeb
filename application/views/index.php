@@ -6,25 +6,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<meta charset="utf-8">
 	<title>Comercio de créditos</title>
 	<link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>assets/css/comercio.css">
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/startTime.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-min.js"></script>
 </head>
 <body>
 
 <?php
-$app = new App();
 $user = new User("User1", 10);
+$app = new App();
 
 $cuentaNombre = $user->getName();
 $creds = $user->getCreditos();
 
-print '<div align="center"><img src="https://www.uppic.es/images/2016/03/03/MercadoNegro.png"><br><br>';
+?>
+<div align="center"><img src="https://www.uppic.es/images/2016/03/03/MercadoNegro.png"><br><br>
+<?php
 
-$vista = $this->input->get('vista');
-$accion = $this->input->get('accion');
 $data['app'] = $app;
+$data['currentUrl'] = $currentUrl;
 
-switch ($vista) {
+switch ($view) {
     case 'nuevaOferta':
-        //include('nuevaOferta.php');
+        $this->load->view('nuevaOferta', $data);
         break;
     case 'historial':
         //include('historial.php');

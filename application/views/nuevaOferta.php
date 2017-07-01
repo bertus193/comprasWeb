@@ -1,4 +1,4 @@
-   <SCRIPT language=Javascript>
+<SCRIPT language=Javascript>
       function isNumberKey(evt)
       {
          var charCode = (evt.which) ? evt.which : event.keyCode
