@@ -52,10 +52,7 @@ jQuery(function ($) {
 </script>
 
 <?php
-//-- No direct access
-//defined('_JEXEC') || die('=;)');
-
-$app->getSql();
+date_default_timezone_set('Europe/Madrid');
 
 print '<div id="container"style="min-height: 448px;">
             <div class="data"></div>
@@ -67,24 +64,24 @@ print '<h2>Últimas 6 ventas realizadas</h2>';
 print '<div style="display: table; text-align: center;">';
 
 //Finalizadas
-$query = mysql_query("SELECT id, compradorPjNombre , personaje, creditos, precioTipo, precio, fechaFin, compradorCuenta, now() as now FROM don_comercio WHERE fechaCompra is not null ORDER BY fechaCompra desc LIMIT 6");
+$subastas = $app->getSubastasFinalizadas(6);
 
-if ($query && mysql_num_rows($query) >= 1) {
+if ($subastas && count($subastas) >= 1) {
     //print '<table class="tabla" width="100%">';
     //print '<tr><td>Jugador</td><td>Créditos Ofrecidos</td><td>Precio de Venta</td><td>Fecha de Finalización</td></tr>';
     $trTipo = 0;
 
-    while ($oferta = mysql_fetch_array($query)) {
-        $id = $oferta['id'];
-        $pj = $oferta['personaje'];
-        $creditos = $oferta['creditos'];
-        $compradorPjNombre = $oferta['compradorPjNombre'];
-        if ($oferta['precioTipo'] == 49426) {
+    foreach ($subastas as $oferta) {
+        $id = $oferta->getId();
+        $pj = $oferta->getPersonaje();
+        $creditos = $oferta->getCreditos();
+        //$compradorPjNombre = $oferta->getCompradorPjNombre();
+        if ($oferta->getPrecioTipo() == 49426) {
             $ofertaTipo = "emblemas de escarcha";
         }
-        $precio = $oferta['precio'].' '.$ofertaTipo;
-        $fechaFin = strtotime($oferta['fechaFin']);
-        $now = strtotime($oferta['now']);
+        $precio = $oferta->getPrecio().' '.$ofertaTipo;
+        $fechaFin = strtotime($oferta->getFechaFin());
+        $now = date('Y-m-d H:i:s');
         $finOferta = $fechaFin - $now;
         /*if($trTipo == 0){
 
@@ -108,11 +105,11 @@ if ($query && mysql_num_rows($query) >= 1) {
 				<div class="cajaBody">';
         print '<p><font class=descripcion>Vendedor: </font>'.$pj.'</p>';
         print '<p><font class=descripcion>Precio: </font>'.$precio.' </p>';
-        if ($compradorPjNombre) {
+        /*if ($compradorPjNombre) {
             print '<p><font color="green">¡VENDIDO a '.$compradorPjNombre.'!</font></p>';
         } else {
             print '<p><font color="green">¡VENDIDO!</font></p>';
-        }
+        }*/
                 
                 
         print '</div></div></a>';

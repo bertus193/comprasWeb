@@ -26,8 +26,6 @@ print '<h2>Añadir Oferta</h2>';
 
 print '<div style="background-color: rgba(0, 0, 0, 0.14); width: 360px; border-radius: 10px; border-style: solid; border-color: rgb(5, 4, 4);">';
 print '<div style="margin: 10px 10px 30px;">';
-//-- No direct access
-defined('_JEXEC') || die('=;)');
 
 $ventaSession = $session->get('ventaSession');
 

@@ -1,25 +1,16 @@
 <?php
 
-require_once("config.php");
 require_once("user.php");
 require_once("subasta.php");
 
-class App
+class App extends CI_Model
 {
     private $sql;
     private $config;
 
     public function __construct()
     {
-        $this->config = new Config();
-    }
-
-    public function getSql()
-    {
-        $sql = mysql_connect($this->config->getHost() . ':' . $this->config->getDBPort(), $this->config->getDBUser(), $this->config->getDBPass());
-        mysql_select_db($this->config->getDB());
-        mysql_query("SET NAMES 'utf8'", $sql);
-        return $sql;
+        $this->load->database();
     }
 
     public function getSubastas($start, $per_page)
@@ -29,6 +20,18 @@ class App
 
         while ($oferta = mysql_fetch_array($query)) {
             $oferta = new Subasta($oferta["id"], $oferta["personaje"], $oferta["creditos"], $oferta["precioTipo"], $oferta["precio"], $oferta["fechaFin"], $oferta["now"]);
+            array_push($subastas, $oferta);
+        }
+
+        return $subastas;
+    }
+
+    public function getSubastasFinalizadas($total)
+    {
+        $subastas = array();
+        $query = $this->db->query("SELECT id, compradorPjNombre , personaje, creditos, precioTipo, precio, fechaFin, compradorCuenta, now() as now FROM comercio WHERE fechaCompra is not null ORDER BY fechaCompra desc LIMIT 6");
+        foreach ($query->result() as $oferta) {
+            $oferta = new Subasta($oferta->id, $oferta->personaje, $oferta->creditos, $oferta->precioTipo, $oferta->precio, $oferta->fechaFin, $oferta->now);
             array_push($subastas, $oferta);
         }
 

@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Comercio de créditos</title>
-  <meta charset="UTF-8">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
-</head>	
-<body>
 <?php
-//-- No direct access
-//defined('_JEXEC') || die('=;)');
+defined('BASEPATH') or exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comercio de créditos</title>
+	<link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>assets/css/comercio.css">
+</head>
+<body>
 
-require_once("./model/app.php");
-
-print '<style>';
-include("comercio.css");
-print '</style>';
-
+<?php
 $app = new App();
 $user = new User("User1", 10);
 
@@ -26,24 +18,22 @@ $creds = $user->getCreditos();
 
 print '<div align="center"><img src="https://www.uppic.es/images/2016/03/03/MercadoNegro.png"><br><br>';
 
-$vista = $_GET['vista'];
-$accion = $_GET['accion'];
+$vista = $this->input->get('vista');
+$accion = $this->input->get('accion');
+$data['app'] = $app;
 
 switch ($vista) {
     case 'nuevaOferta':
-        include('nuevaOferta.php');
+        //include('nuevaOferta.php');
         break;
     case 'historial':
-        include('historial.php');
+        //include('historial.php');
         break;
     case 'comprar':
-        include('comprar.php');
-        break;
-    case 'nuevaOferta':
-        include('nuevaOferta.php');
+        //include('comprar.php');
         break;
     default:
-        include('principal.php');
+        $this->load->view('principal', $data);
         break;
 }
 
@@ -60,5 +50,6 @@ print '</div><br><br>';
 print '</div>';
 
 ?>
+
 </body>
 </html>
