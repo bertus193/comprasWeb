@@ -11,7 +11,9 @@ class Subasta
     private $fechaInicio;
     private $fechaFin;
 
-    public function __construct($id, $personaje, $creditos, $precioTipo, $precio, $fechaInicio, $fechaFin)
+    private $compradorPjNombre;
+
+    public function __construct($id, $personaje, $creditos, $precioTipo, $precio, $fechaInicio, $fechaFin, $compradorPjNombre)
     {
         $this->setId($id);
         $this->setPersonaje($personaje);
@@ -20,6 +22,7 @@ class Subasta
         $this->setPrecio($precio);
         $this->setFechaInicio($fechaInicio);
         $this->setFechaFin($fechaFin);
+        $this->setCompradorPjNombre($compradorPjNombre);
     }
 
     public function getId()
@@ -91,5 +94,16 @@ class Subasta
     public function setFechaFin($fechaFin)
     {
         $this->fechaFin = $fechaFin;
+    }
+
+    public function getCompradorPjNombre()
+    {
+        return $this->compradorPjNombre;
+    }
+
+
+    public function setCompradorPjNombre($compradorPjNombre)
+    {
+        $this->compradorPjNombre = $compradorPjNombre;
     }
 }

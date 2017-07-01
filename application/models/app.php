@@ -14,10 +14,10 @@ class App extends CI_Model
     public function getSubastas($start, $per_page)
     {
         $subastas = array();
-        $sql = 'SELECT id, personaje, creditos, precioTipo, precio, fechaFin, now() as now FROM comercio WHERE fechaFin > now() AND finalizada = 0 ORDER BY (precio/creditos),id ASC LIMIT ?, ?';
+        $sql = 'SELECT * FROM comercio WHERE fechaFin > now() AND finalizada = 0 ORDER BY (precio/creditos),id ASC LIMIT ?, ?';
         $query = $this->db->query($sql, array($start, $per_page));
         foreach ($query->result() as $oferta) {
-            $oferta = new Subasta($oferta->id, $oferta->personaje, $oferta->creditos, $oferta->precioTipo, $oferta->precio, $oferta->fechaFin, $oferta->now);
+            $oferta = new Subasta($oferta->id, $oferta->personaje, $oferta->creditos, $oferta->precioTipo, $oferta->precio, $oferta->fechaInicio, $oferta->fechaFin, $oferta->compradorPjNombre);
             array_push($subastas, $oferta);
         }
 
@@ -27,10 +27,10 @@ class App extends CI_Model
     public function getSubastasFinalizadas($total)
     {
         $subastas = array();
-        $sql = "SELECT id, compradorPjNombre , personaje, creditos, precioTipo, precio, fechaFin, compradorCuenta, now() as now FROM comercio WHERE fechaCompra is not null ORDER BY fechaCompra desc LIMIT ?";
+        $sql = "SELECT * FROM comercio WHERE fechaCompra is not null ORDER BY fechaCompra desc LIMIT ?";
         $query = $this->db->query($sql, array($total));
         foreach ($query->result() as $oferta) {
-            $oferta = new Subasta($oferta->id, $oferta->personaje, $oferta->creditos, $oferta->precioTipo, $oferta->precio, $oferta->fechaFin, $oferta->now);
+            $oferta = new Subasta($oferta->id, $oferta->personaje, $oferta->creditos, $oferta->precioTipo, $oferta->precio, $oferta->fechaInicio, $oferta->fechaFin, $oferta->compradorPjNombre);
             array_push($subastas, $oferta);
         }
 

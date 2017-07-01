@@ -79,26 +79,11 @@ if ($subastas && count($subastas) >= 1) {
         $id = $oferta->getId();
         $pj = $oferta->getPersonaje();
         $creditos = $oferta->getCreditos();
-        //$compradorPjNombre = $oferta->getCompradorPjNombre();
+        $compradorPjNombre = $oferta->getCompradorPjNombre();
         if ($oferta->getPrecioTipo() == 49426) {
             $ofertaTipo = "emblemas de escarcha";
         }
         $precio = $oferta->getPrecio().' '.$ofertaTipo;
-        $fechaFin = strtotime($oferta->getFechaFin());
-        $now = date('Y-m-d H:i:s');
-        $finOferta = $fechaFin - $now;
-        /*if($trTipo == 0){
-
-            print '<tr class="odd"><td>'.$pj.'</td><td>'.$creditos.' C</td><td>'.$precio.'</td><td>'.$finOferta.'</td>';
-            //print '<td><a href="comercio?vista=comprar&accion='.$id.'">Comprar</a></td>';
-            print '</tr>';
-            $trTipo = 1;
-        }
-        else{
-            print '<a href="comercio?vista=comprar&accion='.$id.'"><tr class="even"><td>'.$pj.'</td><td>'.$creditos.' C</td><td>'.$precio.'</td><td>'.$finOferta.'</td>';
-            print '</tr></a>';
-            $trTipo = 0;
-        }*/
 
         print '<a href="'.uri_string().$id.'"><div class="caja">
 				<div class="cajaImagen">
@@ -109,11 +94,11 @@ if ($subastas && count($subastas) >= 1) {
 				<div class="cajaBody">';
         print '<p><font class=descripcion>Vendedor: </font>'.$pj.'</p>';
         print '<p><font class=descripcion>Precio: </font>'.$precio.' </p>';
-        /*if ($compradorPjNombre) {
+        if ($compradorPjNombre) {
             print '<p><font color="green">¡VENDIDO a '.$compradorPjNombre.'!</font></p>';
         } else {
             print '<p><font color="green">¡VENDIDO!</font></p>';
-        }*/
+        }
                 
                 
         print '</div></div></a>';

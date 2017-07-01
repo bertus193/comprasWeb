@@ -1,9 +1,8 @@
 function startTimer(duration, display) {
     var timer = duration, hours, minutes, seconds;
+    console.log(duration);
     setInterval(function () {
-        if (duration > 3600) {
-            display.textContent = hours + ":" + minutes + ":" + seconds;
-        }
+
         var sec_num = parseInt(timer, 10);
         hours = Math.floor(sec_num / 3600);
         minutes = Math.floor((sec_num - (hours * 3600)) / 60);

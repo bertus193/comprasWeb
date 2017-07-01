@@ -40,6 +40,9 @@ if ($data['page'] > 0) {
         print '<p><font class=descripcion>Precio: </font>'.$precio.'</p>';
         print '</div></div></a>';
     }
+    if (sizeof($subastas) <=0) {
+        print 'No existen ofertas actualmente';
+    }
 
     $count = $app->getRowsSUbastas();
     $no_of_paginations = ceil($count / $per_page);
