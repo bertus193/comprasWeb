@@ -112,16 +112,6 @@ tr.even {
 
 }
 
-.cajaImagenItem{
-    position: absolute; 
-    margin: 45px 0px 0px -16px; 
-    background-color: rgb(59, 58, 125); 
-    min-width: 24px; 
-    border-radius: 15px; 
-    height: 23px;
-    line-height: 26px;
-}
-
 .creditos{
     background-color: rgba(0, 128, 0, 0.13);
     border-radius: 25px;

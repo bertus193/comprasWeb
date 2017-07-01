@@ -28,7 +28,7 @@ class App
         $query = mysql_query("SELECT id, personaje, creditos, precioTipo, precio, fechaFin, now() as now FROM comercio WHERE fechaFin > now() AND finalizada = 0 ORDER BY (precio/creditos),id ASC LIMIT $start, $per_page");
 
         while ($oferta = mysql_fetch_array($query)) {
-            $oferta = new Subasta($oferta["id"], $oferta["personaje"], $oferta["creditos"], $oferta["precioTipo"], $oferta["precio"], $oferta["now"], $oferta["fechaFin"]);
+            $oferta = new Subasta($oferta["id"], $oferta["personaje"], $oferta["creditos"], $oferta["precioTipo"], $oferta["precio"], $oferta["fechaFin"], $oferta["now"]);
             array_push($subastas, $oferta);
         }
 
