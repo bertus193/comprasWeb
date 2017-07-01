@@ -35,7 +35,7 @@ if ($_POST['page']) {
         print '<a href="comercio?vista=comprar&accion='.$id.'"><div class="caja">
 				<div class="cajaImagen">
 					<img src="https://static.terra-golfa.com/img/icons/coin-icon.png">';
-        print '<span style="position: absolute; margin: 45px 0px 0px -16px; background-color: rgb(59, 58, 125); min-width: 24px; border-radius: 15px; height: 23px;">'.$creditos.'</span>';
+        print '<span class="cajaImagenItem">'.$creditos.'</span>';
                     
         print '</div>
 				<div class="cajaBody">';
